@@ -18,8 +18,6 @@ package org.polypheny.db.transaction.locking;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import org.jetbrains.annotations.NotNull;
@@ -101,7 +99,7 @@ public class LockableImpl implements Lockable {
             } );
             DeadlockHandler.INSTANCE.remove( this, transaction );
             concurrencyCondition.signalAll();
-            printInfo( "R", transaction );
+            //printInfo( "R", transaction );
         } finally {
             concurrencyLock.unlock();
         }
@@ -134,7 +132,7 @@ public class LockableImpl implements Lockable {
                 concurrencyCondition.await();
             }
             owners.put( transaction, owners.getOrDefault( transaction, 0L ) + 1 );
-            printInfo( "ASh", transaction );
+            //printInfo( "ASh", transaction );
         } finally {
             concurrencyLock.unlock();
         }
@@ -154,7 +152,7 @@ public class LockableImpl implements Lockable {
             }
             isExclusive = true;
             owners.put( transaction, 1L );
-            printInfo( "AEx", transaction );
+            //printInfo( "AEx", transaction );
         } finally {
             concurrencyLock.unlock();
         }
